@@ -25,12 +25,14 @@
     <a href="/bangDia/create">insert</a>
     <br />
 
-    <table border="1" cellpadding="0" cellspacing="0" >
+    <table border="1" cellpadding="0" cellspacing="0">
       <tr>
         <th>ID</th>
         <th>tenBangDia</th>
         <th>theLoai</th>
         <th>nhaSX</th>
+        <th>noiDung</th>
+        <th>gia</th>
         <th>Action</th>
       </tr>
       <% bangDias.forEach((item)=> { %>
@@ -39,6 +41,8 @@
         <td><%= item.tenBangDia %></td>
         <td><%= item.theLoai %></td>
         <td><%= item.nhaSX %></td>
+        <td><%= item.noiDung %></td>
+        <td><%= item.gia %></td>
         <td>
           <a href="/bangDia/edit/<%= item.id %>">Edit</a> <br />
           <a href="/bangDia/delete/<%= item.id %>">Delete</a>

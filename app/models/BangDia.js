@@ -1,11 +1,13 @@
 "use strict";
 const sql = require("./db");
+
 class BangDia {
   constructor(bangDia) {
     this.tenBangDia = bangDia?.tenBangDia;
     this.theLoai = bangDia?.theLoai;
     this.nhaSX = bangDia?.nhaSX;
     this.noiDung = bangDia?.noiDung;
+    this.gia= bangDia?.gia;
   }
   getProperties() {
     return {
@@ -13,6 +15,7 @@ class BangDia {
       theLoai: this.theLoai,
       nhaSX: this.nhaSX,
       noiDung: this.noiDung,
+      gia: this.gia,
     };
   }
   insert(result) {

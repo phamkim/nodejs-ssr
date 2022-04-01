@@ -10,14 +10,6 @@
 
   <body>
     <h2>Edit BangDia</h2>
-
-    <% if (typeof status !=='undefined' ) { %> <%if (status=='success' ) { %>
-    <div style="color: green">Updated Successfully</div>
-    <% } else { %>
-    <div style="color: red">Some error occurred while editing</div>
-    <% } %>
-    <br />
-    <% } %>
     <form action="/bangDia/<%= bangDia.id %>" method="post">
       <input name="_method" type="hidden" value="put" />
       <label for="title">tenBangDia</label>
@@ -29,7 +21,7 @@
       />
       <br />
       <br />
-      <label for="description">theLoai</label>
+      <label for="theLoai">theLoai</label>
       <input
         type="text"
         name="theLoai"
@@ -38,8 +30,21 @@
       />
       <br />
       <br />
-      <label for="published">nhaSX</label>
+      <label for="nhaSX">nhaSX</label>
       <input type="text" name="nhaSX" id="nhaSX" value="<%= bangDia.nhaSX %>" />
+      <br /><br />
+      <br />
+      <label for="noiDung">noiDung</label>
+      <input
+        type="text"
+        name="noiDung"
+        id="noiDung"
+        value="<%= bangDia.noiDung %>"
+      />
+      <br /><br />
+      <br />
+      <label for="gia">gia</label>
+      <input type="number" name="gia" id="gia" value="<%= bangDia.gia %>" />
       <br /><br />
       <button type="submit">Update</button>
     </form>
