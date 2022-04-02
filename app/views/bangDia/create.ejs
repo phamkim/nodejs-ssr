@@ -9,15 +9,6 @@
   </head>
   <body>
     <h2>Create new BangDia</h2>
-
-    <% if (typeof status !== 'undefined') { %> <%if (status == 'success') { %>
-    <div style="color: green">Created Successfully</div>
-    <% } else { %>
-    <div style="color: red">Some error occurred while creating</div>
-    <% } %>
-    <br />
-    <% } %>
-
     <form action="/bangDia" method="post">
       <label for="tenBangDia">tenBangDia</label>
       <input type="text" id="tenBangDia" name="tenBangDia" />
@@ -36,7 +27,7 @@
       <label for="gia">gia</label>
       <input type="number" name="gia" id="gia" />
       <br /><br />
-      <button type="submit">Create</button>
+      <button type="submit">Save</button>
     </form>
     <br />
     <a href="/bangDia">back</a>

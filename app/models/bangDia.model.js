@@ -7,97 +7,98 @@ class BangDia {
     this.theLoai = bangDia?.theLoai;
     this.nhaSX = bangDia?.nhaSX;
     this.noiDung = bangDia?.noiDung;
-    this.gia= bangDia?.gia;
+    this.gia = bangDia?.gia;
   }
-  getProperties() {
-    return {
-      tenBangDia: this.tenBangDia,
-      theLoai: this.theLoai,
-      nhaSX: this.nhaSX,
-      noiDung: this.noiDung,
-      gia: this.gia,
-    };
-  }
-  insert(result) {
-    const data = this.getProperties();
-    sql.query("INSERT INTO bangdia SET ?", data, (err, res) => {
+}
+
+class QLBD {
+
+  static insert(bangDia, callback) {
+    sql.query("INSERT INTO bangdia SET ?", bangDia, (err, res) => {
       if (err) {
         console.log("err", err);
-        result(err, null);
+        callback(err, null);
         return;
       }
       console.log("inserted:", { id: res.insertId });
-      result(null, {
+      callback(null, {
         id: res.insertId,
-        ...data,
+        ...bangDia,
       });
     });
   }
-  getById(id, result) {
+
+  static getById(id, callback) {
     sql.query(`SELECT * FROM bangdia WHERE id = ${id}`, (err, res) => {
       if (err) {
         console.log("err", err);
-        result(err, null);
+        callback(err, null);
         return;
       }
       if (res.length) {
         console.log("found: ", res[0]);
-        result(null, res[0]);
+        callback(null, res[0]);
         return;
       }
       // not found with the id
-      result({ kind: "not_found" }, null);
-    });
-  }
-  getAll(tenBangDia, result) {
-    let query = "SELECT * FROM bangdia";
-    if (tenBangDia) {
-      query += ` WHERE tenBangDia LIKE '%${tenBangDia}%'`;
-    }
-    sql.query(query, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
-      console.log("bangDia: ", res);
-      result(null, res);
-    });
-  }
-  update(id, result) {
-    const data = this.getProperties();
-    sql.query("UPDATE bangdia SET ? WHERE id = ?", [data, id], (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
-      if (res.affectedRows == 0) {
-        // not found  with the id
-        result({ kind: "not_found" }, null);
-        return;
-      }
-      console.log("updated : ", { id: id, ...data });
-      result(null, { id: id, ...data });
+      callback({ kind: "not_found" }, null);
     });
   }
 
-  delete(id, result) {
+  static getAll(tenBangDia, callback) {
+    let query = "SELECT * FROM bangdia";
+    if (tenBangDia) {
+      query += ` WHERE tenBangDia LIKE '%${tenBangDia}%'`;
+    } // nếu có truyền vào tên băng đĩa thì sẽ tìm kiếm theo tên
+
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        callback(null, err);
+        return;
+      }
+      console.log("bangDia: ", res);
+      callback(null, res);
+    });
+  }
+
+  static update(id, bangDia, callback) {
+    sql.query(
+      "UPDATE bangdia SET ? WHERE id = ?",
+      [bangDia, id],
+      (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          callback(null, err);
+          return;
+        }
+        if (res.affectedRows == 0) {
+          // not found  with the id
+          callback({ kind: "not_found" }, null);
+          return;
+        }
+        console.log("updated : ", { id: id, ...bangDia });
+        callback(null, { id: id, ...bangDia });
+      }
+    );
+  }
+
+  static delete(id, callback) {
     sql.query("DELETE FROM bangdia WHERE id = ?", id, (err, res) => {
       if (err) {
         console.log("error: ", err);
-        result(null, err);
+        callback(null, err);
         return;
       }
       if (res.affectedRows == 0) {
         // not found with the id
-        result({ kind: "not_found" }, null);
+        callback({ kind: "not_found" }, null);
         return;
       }
       console.log("deleted with id: ", id);
-      result(null, res);
+      callback(null, res);
     });
   }
 }
 
-module.exports = BangDia;
+module.exports = { BangDia, QLBD };
